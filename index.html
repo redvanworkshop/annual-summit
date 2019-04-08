@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+
+    <title>RVW Summit</title>
+
+    <!-- Mobile Specific Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="RVW Summit">
+    <meta name="application-name" content="RVW Summit">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet" type="text/css" href="assets/css/plugins.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">RVW Summit</a>
+
+        <input type="file" id="add-photo" name="add-photo" accept="image/png, image/jpeg" class="input-file">
+        <label for="add-photo"><strong>+</strong> Upload <span>Photo</span></label>
+      </nav>
+    </header>
+    <section>
+      <div class="grid" id="album-selector"></div>
+      <div class="grid" id="album-gallery"></div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.283.1.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/site.js"></script>
+
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+  </body>
+</html>

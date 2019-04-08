@@ -1,0 +1,187 @@
+$background-color: #000;
+$text-color: #EEEEEE;
+$rvw-color: #dd0e3a;
+$transition: 0.15s;
+
+/* CSS RESET */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}html{box-sizing:border-box;}*,*:before,*:after{box-sizing:inherit;}
+
+body {
+  background: $background-color;
+  font-family: 'Open Sans', sans-serif;
+}
+
+header {
+  padding: 0 20px;
+  height: 90px;
+
+  nav {
+    a {
+      color: $text-color;
+      text-decoration: none;
+      font-size: 30px;
+      font-weight: 300;
+      line-height: 90px;
+      transition: color $transition;
+
+      &:hover {
+        color: $rvw-color;
+      }
+    }
+
+    /* Hide Input and Use Label */
+    .input-file {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+    .input-file + label {
+      float: right;
+      color: #FFFFFF;
+      cursor: pointer;
+      background: #dd0e3a;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      font-size: 14px;
+      line-height: 20px;
+      position: relative;
+      top: 25px;
+
+      strong {
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 16px;
+        vertical-align: text-top;
+        position: relative;
+      }
+    }
+    .input-file:focus + label {
+      outline: 1px dotted $rvw-color;
+      outline: -webkit-focus-ring-color auto 5px;
+    }
+    .input-file + label * {
+      pointer-events: none;
+    }
+  }
+}
+
+section {
+  padding: 0 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  .grid {
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-gap: 20px;
+
+    .album-image {
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .album-year {
+      grid-column: 1 / -1;
+      grid-row: span 3;
+      height: 100%;
+
+      a {
+        text-align: center;
+        text-decoration: none;
+        color: $text-color;
+        display: block;
+        height: 100%;
+        width: 100%;
+        background: #222;
+        border: 1px solid #333;
+        padding: 30px 20px;
+        height: 100%;
+        transition: box-shadow $transition;
+        border-radius: 6px;
+
+        h1 {
+          font-size: 30px;
+          margin-bottom: 10px;
+          transition: color $transition;
+        }
+
+        .date {
+          font-size: 12px;
+          margin-bottom: 30px;
+          font-weight: 300;
+        }
+        .location {
+          font-size: 20px;
+          font-weight: 300;
+          margin-bottom: 10px;
+        }
+        .description {
+          font-size: 12px;
+          margin-bottom: 10px;
+          font-weight: 300;
+          line-height: 20px;
+        }
+
+        &:hover {
+          box-shadow: 0 0 20px #000;
+
+          h1 {
+            color: $rvw-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  header {
+    height: 60px;
+
+    nav {
+      a {
+        font-size: 24px;
+        line-height: 60px;
+      }
+
+      .input-file + label {
+        top: 16px;
+        padding: 4px 8px;
+        border-radius: 4px;
+
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 488px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
