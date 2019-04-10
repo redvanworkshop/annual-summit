@@ -38,7 +38,7 @@ header {
       position: absolute;
       z-index: -1;
     }
-    .input-file + label {
+    #add-photo-label {
       float: right;
       color: #FFFFFF;
       cursor: pointer;
@@ -50,6 +50,7 @@ header {
       line-height: 20px;
       position: relative;
       top: 25px;
+      display: none;
 
       strong {
         font-size: 22px;
@@ -58,11 +59,13 @@ header {
         vertical-align: text-top;
         position: relative;
       }
+
+      &:focus {
+        outline: 1px dotted $rvw-color;
+        outline: -webkit-focus-ring-color auto 5px;
+      }
     }
-    .input-file:focus + label {
-      outline: 1px dotted $rvw-color;
-      outline: -webkit-focus-ring-color auto 5px;
-    }
+
     .input-file + label * {
       pointer-events: none;
     }

@@ -58,7 +58,7 @@ header {
       overflow: hidden;
       position: absolute;
       z-index: -1; }
-    header nav .input-file + label {
+    header nav #add-photo-label {
       float: right;
       color: #FFFFFF;
       cursor: pointer;
@@ -69,16 +69,17 @@ header {
       font-size: 14px;
       line-height: 20px;
       position: relative;
-      top: 25px; }
-      header nav .input-file + label strong {
+      top: 25px;
+      display: none; }
+      header nav #add-photo-label strong {
         font-size: 22px;
         font-weight: 700;
         line-height: 16px;
         vertical-align: text-top;
         position: relative; }
-    header nav .input-file:focus + label {
-      outline: 1px dotted #dd0e3a;
-      outline: -webkit-focus-ring-color auto 5px; }
+      header nav #add-photo-label:focus {
+        outline: 1px dotted #dd0e3a;
+        outline: -webkit-focus-ring-color auto 5px; }
     header nav .input-file + label * {
       pointer-events: none; }
 

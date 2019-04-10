@@ -40,6 +40,7 @@ const RVW_SUMMIT = (function () {
   const $selector = document.getElementById('album-selector');
   const $gallery = document.getElementById('album-gallery');
   const $add = document.getElementById('add-photo');
+  const $addLabel = document.getElementById('add-photo-label');
 
   /**
    * Setup Public AWS Access
@@ -173,6 +174,7 @@ const RVW_SUMMIT = (function () {
 
       $selector.style.display = 'grid';
       $gallery.style.display = 'none';
+      $addLabel.style.display = 'none';
     }
   };
 
@@ -196,6 +198,7 @@ const RVW_SUMMIT = (function () {
 
     $selector.style.display = 'none';
     $gallery.style.display = 'grid';
+    $addLabel.style.display = 'block';
   };
 
   const generateAlbum = function (photos) {
