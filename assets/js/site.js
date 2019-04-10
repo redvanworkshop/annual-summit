@@ -41,6 +41,7 @@ const RVW_SUMMIT = (function () {
   const $gallery = document.getElementById('album-gallery');
   const $add = document.getElementById('add-photo');
   const $addLabel = document.getElementById('add-photo-label');
+  const $homeButton = document.getElementById('home-button');
 
   /**
    * Setup Public AWS Access
@@ -175,6 +176,7 @@ const RVW_SUMMIT = (function () {
       $selector.style.display = 'grid';
       $gallery.style.display = 'none';
       $addLabel.style.display = 'none';
+      $homeButton.innerHTML = 'RVW Summit';
     }
   };
 
@@ -199,6 +201,7 @@ const RVW_SUMMIT = (function () {
     $selector.style.display = 'none';
     $gallery.style.display = 'grid';
     $addLabel.style.display = 'block';
+    $homeButton.innerHTML = '&lsaquo;&nbsp; Back';
   };
 
   const generateAlbum = function (photos) {
@@ -209,8 +212,8 @@ const RVW_SUMMIT = (function () {
       var photo = photos[i];
 
       elm.innerHTML = `<div class="album-image" data-responsive="${photo.url} 375, ${photo.url} 480, ${photo.url} 800" data-src="${photo.url}" data-sub-html="<h4>${selectedYear} - ${summits[selectedYear].location}</h4><p>${summits[selectedYear].description}</p>">
-        <a href="${photo.url}">
-          <img class="img-responsive" src="${photo.url}">
+        <a href="${photo.url}" style="background-image: url('${photo.url}')">
+          <img src="${photo.url}">
         </a>
       </div>`;
 

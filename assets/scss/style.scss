@@ -7,13 +7,15 @@ $transition: 0.15s;
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}html{box-sizing:border-box;}*,*:before,*:after{box-sizing:inherit;}
 
 body {
-  background: $background-color;
   font-family: 'Open Sans', sans-serif;
+  background: url(../img/rvw-body-bg.png) top left fixed $background-color;
 }
 
 header {
   padding: 0 20px;
   height: 90px;
+  max-width: 1440px;
+  margin: 0 auto;
 
   nav {
     a {
@@ -83,8 +85,31 @@ section {
     grid-gap: 20px;
 
     .album-image {
-      img {
-        max-width: 100%;
+      grid-column: 1 / -1;
+      grid-row: span 3;
+      height: 100%;
+
+      a {
+        display: block;
+        height: 100%;
+        width: 100%;
+        background: #111;
+        padding: 30px 20px;
+        height: 100%;
+        transition: all $transition;
+        border-radius: 6px;
+        min-height: 250px;
+        background: center center no-repeat;
+        background-size: auto 100%;
+
+        img {
+          display: none;
+        }
+
+        &:hover {
+          background-size: auto 120%;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.95);
+        }
       }
     }
 
@@ -100,11 +125,10 @@ section {
         display: block;
         height: 100%;
         width: 100%;
-        background: #222;
-        border: 1px solid #333;
+        background: rgba(0,0,0,0.5);
         padding: 30px 20px;
         height: 100%;
-        transition: box-shadow $transition;
+        transition: all $transition;
         border-radius: 6px;
 
         h1 {
@@ -131,7 +155,8 @@ section {
         }
 
         &:hover {
-          box-shadow: 0 0 20px #000;
+          background: rgba(0,0,0,0.75);
+          transform: scale(1.1);
 
           h1 {
             color: $rvw-color;
@@ -152,7 +177,7 @@ section {
         line-height: 60px;
       }
 
-      .input-file + label {
+      #add-photo-label {
         top: 16px;
         padding: 4px 8px;
         border-radius: 4px;
