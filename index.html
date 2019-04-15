@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   </head>
   <body>
+    <div id="loader" class="show"></div>
+
     <header>
       <nav>
         <a href="/" id="home-button">RVW Summit</a>
@@ -26,9 +28,14 @@
         <label for="add-photo" id="add-photo-label"><strong>+</strong> Upload <span>Photo</span></label>
       </nav>
     </header>
+
     <section>
       <div class="grid" id="album-selector"></div>
       <div class="grid" id="album-gallery"></div>
+      <div id="no-images">
+        <h2>This Album is Empty</h2>
+        <p>Upload photos if you have any</p>
+      </div>
     </section>
 
     <!-- Scripts -->

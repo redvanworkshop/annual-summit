@@ -78,11 +78,14 @@ section {
   padding: 0 20px;
   max-width: 1440px;
   margin: 0 auto;
+  z-index: 5;
+  position: relative;
 
   .grid {
     display: grid;
     grid-auto-rows: 1fr;
     grid-gap: 20px;
+    padding-bottom: 20px;
 
     .album-image {
       grid-column: 1 / -1;
@@ -91,23 +94,23 @@ section {
 
       a {
         display: block;
-        height: 100%;
+        height: 250px;
         width: 100%;
         background: #111;
         padding: 30px 20px;
-        height: 100%;
         transition: all $transition;
         border-radius: 6px;
-        min-height: 250px;
         background: center center no-repeat;
-        background-size: auto 100%;
+        background-size: cover;
+        background-image: linear-gradient(#1b1b15, #000000);
+        z-index: 5;
 
         img {
           display: none;
         }
 
         &:hover {
-          background-size: auto 120%;
+          transform: scale(1.1);
           box-shadow: 0 0 20px rgba(0, 0, 0, 0.95);
         }
       }
@@ -130,6 +133,7 @@ section {
         height: 100%;
         transition: all $transition;
         border-radius: 6px;
+        z-index: 5;
 
         h1 {
           font-size: 30px;
@@ -166,6 +170,59 @@ section {
     }
   }
 }
+
+#loader, #loader:after {
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+}
+#loader {
+  border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-left: 1.1em solid #ffffff;
+  transform: translateZ(0);
+  animation: loader 1.1s infinite linear;
+  position: absolute;
+  top: calc(50% - 80px);
+  left: calc(50% - 80px);
+  display: none;
+  z-index: 1;
+
+  &.show {
+    display: block;
+  }
+}
+
+#no-images {
+  text-align: center;
+  display: none;
+
+  h2 {
+    font-size: 30px;
+    font-weight: 300;
+    margin-bottom: 12px;
+    margin-top: 60px;
+    color: #FFF;
+  }
+
+  p {
+    color: #CCC;
+    font-weight: 300;
+  }
+}
+
+@keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
 
 @media screen and (max-width: 375px) {
   header {
