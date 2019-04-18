@@ -35,7 +35,7 @@ html {
 
 body {
   font-family: 'Open Sans', sans-serif;
-  background: url(../img/rvw-body-bg.png) top left fixed black; }
+  background: url(../img/rvw-body-bg.png) top left fixed #000; }
 
 header {
   padding: 0 20px;
@@ -45,7 +45,7 @@ header {
   header nav {
     /* Hide Input and Use Label */ }
     header nav a {
-      color: #eeeeee;
+      color: #EEEEEE;
       text-decoration: none;
       font-size: 30px;
       font-weight: 300;
@@ -72,7 +72,8 @@ header {
       line-height: 20px;
       position: relative;
       top: 25px;
-      display: none; }
+      display: none;
+      border: 2px solid transparent; }
       header nav #add-photo-label strong {
         font-size: 22px;
         font-weight: 700;
@@ -82,6 +83,11 @@ header {
       header nav #add-photo-label:focus {
         outline: 1px dotted #dd0e3a;
         outline: -webkit-focus-ring-color auto 5px; }
+      header nav #add-photo-label.active {
+        color: #dd0e3a;
+        cursor: grabbing;
+        border: 2px solid #dd0e3a;
+        background: transparent; }
     header nav .input-file + label * {
       pointer-events: none; }
 
@@ -110,7 +116,7 @@ section {
         border-radius: 6px;
         background: center center no-repeat;
         background-size: cover;
-        background-image: linear-gradient(#1b1b15, black);
+        background-image: linear-gradient(#1b1b15, #000000);
         z-index: 5; }
         section .grid .album-image a img {
           display: none; }
@@ -124,7 +130,7 @@ section {
       section .grid .album-year a {
         text-align: center;
         text-decoration: none;
-        color: #eeeeee;
+        color: #EEEEEE;
         display: block;
         height: 100%;
         width: 100%;
@@ -173,7 +179,7 @@ section {
   top: calc(50% - 80px);
   left: calc(50% - 80px);
   display: none;
-  z-index: 1; }
+  z-index: 500; }
   #loader.show {
     display: block; }
 
@@ -194,7 +200,6 @@ section {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); }
-
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
@@ -222,3 +227,5 @@ section {
 @media screen and (min-width: 1280px) {
   .grid {
     grid-template-columns: repeat(5, 1fr); } }
+
+/*# sourceMappingURL=style.css.map */

@@ -96,35 +96,100 @@ const RVW_SUMMIT = (function () {
     });
   }
 
+  const slugify = function(text, separator) {
+    text = text.toString().toLowerCase().trim();
+
+    const sets = [
+      {to: 'a', from: '[ÀÁÂÃÄÅÆĀĂĄẠẢẤẦẨẪẬẮẰẲẴẶ]'},
+      {to: 'c', from: '[ÇĆĈČ]'},
+      {to: 'd', from: '[ÐĎĐÞ]'},
+      {to: 'e', from: '[ÈÉÊËĒĔĖĘĚẸẺẼẾỀỂỄỆ]'},
+      {to: 'g', from: '[ĜĞĢǴ]'},
+      {to: 'h', from: '[ĤḦ]'},
+      {to: 'i', from: '[ÌÍÎÏĨĪĮİỈỊ]'},
+      {to: 'j', from: '[Ĵ]'},
+      {to: 'ij', from: '[Ĳ]'},
+      {to: 'k', from: '[Ķ]'},
+      {to: 'l', from: '[ĹĻĽŁ]'},
+      {to: 'm', from: '[Ḿ]'},
+      {to: 'n', from: '[ÑŃŅŇ]'},
+      {to: 'o', from: '[ÒÓÔÕÖØŌŎŐỌỎỐỒỔỖỘỚỜỞỠỢǪǬƠ]'},
+      {to: 'oe', from: '[Œ]'},
+      {to: 'p', from: '[ṕ]'},
+      {to: 'r', from: '[ŔŖŘ]'},
+      {to: 's', from: '[ßŚŜŞŠ]'},
+      {to: 't', from: '[ŢŤ]'},
+      {to: 'u', from: '[ÙÚÛÜŨŪŬŮŰŲỤỦỨỪỬỮỰƯ]'},
+      {to: 'w', from: '[ẂŴẀẄ]'},
+      {to: 'x', from: '[ẍ]'},
+      {to: 'y', from: '[ÝŶŸỲỴỶỸ]'},
+      {to: 'z', from: '[ŹŻŽ]'},
+      {to: '-', from: '[·/_,:;\']'}
+    ];
+
+    sets.forEach(set => {
+      text = text.replace(new RegExp(set.from,'gi'), set.to);
+    });
+
+    text = text.toString().toLowerCase()
+      .replace(/\s+/g, '-')         // Replace spaces with -
+      .replace(/&/g, '-and-')       // Replace & with 'and'
+      .replace(/[^\w\-]+/g, '')     // Remove all non-word chars
+      .replace(/\--+/g, '-')        // Replace multiple - with single -
+      .replace(/^-+/, '')           // Trim - from start of text
+      .replace(/-+$/, '');          // Trim - from end of text
+
+    if ((typeof separator !== 'undefined') && (separator !== '-')) {
+      text = text.replace(/-/g, separator);
+    }
+
+    return text;
+  }
+
   /**
    * Add Photo to Given Album
    * @return {[type]}           [description]
    */
-  const addPhoto = function () {
-    var files = document.getElementById('add-photo').files;
+  const addPhoto = function (dropped) {
+    $loader.classList.add('show');
+
+    // Check if this was an Event of FileList
+    var files = (dropped instanceof FileList) ? dropped : document.getElementById('add-photo').files;
 
     if (!files.length) {
+      $loader.classList.remove('show');
       return alert('Please choose a file to upload first.');
     }
 
-    var file = files[0];
-    var fileName = file.name;
-    var albumPhotosKey = selectedYear.toString() + '/';
-    var photoKey = albumPhotosKey + fileName;
+    var uploaded = 0;
+    var checkComplete = function () {
+      uploaded += 1;
 
-    s3.upload({
-      Key: photoKey,
-      Body: file,
-      ACL: 'public-read'
-    }, function(err, data) {
-      if (err) {
-        return alert('There was an error uploading your photo: ', err.message);
+      if (uploaded === files.length) {
+        uploaded = 0;
+        window.location.reload();
       }
+    };
 
-      fetchAlbum(function (photos) {
-        generateAlbum(photos);
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      var ext = file.name.substr(file.name.lastIndexOf('.') + 1);
+      var fileName = Date.now().toString() + '-' + slugify(file.name.replace(ext, '')) + '.' + ext;
+      var albumPhotosKey = selectedYear.toString() + '/';
+      var photoKey = albumPhotosKey + fileName;
+
+      s3.upload({
+        Key: photoKey,
+        Body: file,
+        ACL: 'public-read'
+      }, function(err, data) {
+        if (err) {
+          return alert('There was an error uploading your photo: ', err.message);
+        }
+
+        checkComplete();
       });
-    });
+    }
   };
 
   const fetchAlbum = function (callback) {
@@ -219,10 +284,13 @@ const RVW_SUMMIT = (function () {
       for (var i = 0; i < photos.length; i++) {
         var elm = document.createElement('div');
         var photo = photos[i];
+        var img375 = photo.url.replace('https://s3.amazonaws.com/rvw-summit/', 'https://dipla1vjmucik.cloudfront.net/375x375/smart/filters:quality(80)/');
+        var img480 = photo.url.replace('https://s3.amazonaws.com/rvw-summit/', 'https://dipla1vjmucik.cloudfront.net/480x480/smart/filters:quality(80)/');
+        var img800 = photo.url.replace('https://s3.amazonaws.com/rvw-summit/', 'https://dipla1vjmucik.cloudfront.net/800x800/smart/filters:quality(80)/');
 
-        elm.innerHTML = `<div class="album-image" data-responsive="${photo.url} 375, ${photo.url} 480, ${photo.url} 800" data-src="${photo.url}" data-sub-html="<h4>${selectedYear} - ${summits[selectedYear].location}</h4><p>${summits[selectedYear].description}</p>">
-          <a href="${photo.url}" style="background-image: url('${photo.url}'), linear-gradient(#1b1b15, #000000)">
-            <img src="${photo.url}">
+        elm.innerHTML = `<div class="album-image" data-responsive="${img375} 375, ${img480} 480, ${img800} 800" data-src="${photo.url}" data-sub-html="<h4>${selectedYear} - ${summits[selectedYear].location}</h4><p>${summits[selectedYear].description}</p>">
+          <a href="${photo.url}" style="background-image: url('${img800}'), linear-gradient(#1b1b15, #000000)">
+            <img src="${img375}">
           </a>
         </div>`;
 
@@ -256,6 +324,46 @@ const RVW_SUMMIT = (function () {
     }
   };
 
+  const dragenter = function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    $addLabel.classList.add('active');
+  };
+
+  const dragover = function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    $addLabel.classList.add('active');
+  };
+
+  const dragleave = function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    $addLabel.classList.remove('active');
+  };
+
+  const dragexit = function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    $addLabel.classList.remove('active');
+  };
+
+  const drop = function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const dt = e.dataTransfer;
+    const files = dt.files;
+
+    addPhoto(files);
+
+    $addLabel.classList.remove('active');
+  };
+
   /**
    * Initialize Gallery
    */
@@ -263,6 +371,13 @@ const RVW_SUMMIT = (function () {
     loadURL();
     window.addEventListener('popstate', loadURL);
     $add.addEventListener('change', addPhoto);
+
+    // Support Drag & Drop
+    $addLabel.addEventListener('dragenter', dragenter, false);
+    $addLabel.addEventListener('dragover', dragover, false);
+    $addLabel.addEventListener('dragleave', dragleave, false);
+    $addLabel.addEventListener('dragexit', dragexit, false);
+    $addLabel.addEventListener('drop', drop, false);
   }
 
   return {

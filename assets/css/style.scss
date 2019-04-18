@@ -53,6 +53,7 @@ header {
       position: relative;
       top: 25px;
       display: none;
+      border: 2px solid transparent;
 
       strong {
         font-size: 22px;
@@ -65,6 +66,13 @@ header {
       &:focus {
         outline: 1px dotted $rvw-color;
         outline: -webkit-focus-ring-color auto 5px;
+      }
+
+      &.active {
+        color: #dd0e3a;
+        cursor: grabbing;
+        border: 2px solid #dd0e3a;
+        background: transparent;
       }
     }
 
@@ -187,7 +195,7 @@ section {
   top: calc(50% - 80px);
   left: calc(50% - 80px);
   display: none;
-  z-index: 1;
+  z-index: 500;
 
   &.show {
     display: block;
