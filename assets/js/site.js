@@ -178,17 +178,25 @@ const RVW_SUMMIT = (function () {
       var albumPhotosKey = selectedYear.toString() + '/';
       var photoKey = albumPhotosKey + fileName;
 
-      s3.upload({
-        Key: photoKey,
-        Body: file,
-        ACL: 'public-read'
-      }, function(err, data) {
-        if (err) {
-          return alert('There was an error uploading your photo: ', err.message);
-        }
+      // Make sure file size is not larger than 5MB
+      // @TODO: Add support for `s3.createMultipartUpload`
+      if (file.size < 5242880) {
+        s3.upload({
+          Key: photoKey,
+          Body: file,
+          ACL: 'public-read'
+        }, function(err, data) {
+          if (err) {
+            $loader.classList.remove('show');
+            return alert('There was an error uploading your photo: ', err.message);
+          }
 
-        checkComplete();
-      });
+          checkComplete();
+        });
+      } else {
+        $loader.classList.remove('show');
+        alert('Image file size must be less than 5MB.');
+      }
     }
   };
 
